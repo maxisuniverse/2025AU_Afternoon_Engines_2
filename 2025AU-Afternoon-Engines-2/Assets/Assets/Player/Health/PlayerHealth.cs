@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
 
     }
     private void heal() {
-            playerHealth += 0.5f * PerkChecker.HealthPerkMult;
+            playerHealth += 0.125f * PerkChecker.HealthPerkMult;
             setText();
     }
 
@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
         if (playerHealth > 0 && iframes <= 0)
         {
             playerHealth -= finalDamage;
-            regenTime = 4f;
+            regenTime = 6f;
             iframes = 0.8f;
 
             Debug.Log("[PlayerHealth] Took " + finalDamage + " damage — Health now: " + playerHealth); 
@@ -106,6 +106,7 @@ public class PlayerHealth : MonoBehaviour
         }
         if (playerHealth <= 0) {
 
+            playerHealth = 0;
             Debug.Log("[PlayerHealth] PLAYER DIED!"); // added by Thomas for testing
 
             gun.SetActive(false);

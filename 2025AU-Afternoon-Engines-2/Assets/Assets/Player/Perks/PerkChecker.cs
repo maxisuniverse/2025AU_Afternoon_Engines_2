@@ -8,7 +8,6 @@ public class PerkChecker : MonoBehaviour
     public static float MovementPerkSpeed = 1f;
     public static float HealthPerkMult = 1f;
 
-
     void Update()
     {
         if (hasFasterMovement == true) {
@@ -19,6 +18,9 @@ public class PerkChecker : MonoBehaviour
         }
         if (hasDoubleHealth == true) {
             HealthPerkMult = 2f;
+        }
+        else {
+            HealthPerkMult = 1f;
         }
     }
 }

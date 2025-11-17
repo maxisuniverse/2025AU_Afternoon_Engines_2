@@ -5,7 +5,7 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject playerUI;
     public GameObject pauseMenuUI;
-
+    
     private bool isPaused = false;
     public static bool GameIsPaused = false;
     public static float lastUnpauseTime;
@@ -60,6 +60,9 @@ public class PauseMenu : MonoBehaviour
 
         AudioListener.pause = false;
 
+        PerkChecker.hasDoubleHealth = false;
+        PerkChecker.hasSpeedReload = false;
+        PerkChecker.hasFasterMovement = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

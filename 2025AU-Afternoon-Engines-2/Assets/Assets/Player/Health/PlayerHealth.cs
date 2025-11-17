@@ -119,7 +119,7 @@ public class PlayerHealth : MonoBehaviour
     }
     void setHealthUI() {
         healthTex.text = Mathf.Floor(playerHealth).ToString();
-        healthBar.fillAmount = playerHealth / maxHealth;
+        healthBar.fillAmount = playerHealth / maxHealth * PerkChecker.HealthPerkMult;
     }
     
 }

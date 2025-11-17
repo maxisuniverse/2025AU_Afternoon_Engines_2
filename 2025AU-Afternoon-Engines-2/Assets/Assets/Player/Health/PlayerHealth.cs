@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 public class PlayerHealth : MonoBehaviour
 {   
     public float playerHealth = 100 * PerkChecker.HealthPerkMult;
@@ -7,25 +9,27 @@ public class PlayerHealth : MonoBehaviour
     public GameObject parent;
     private float regenTime = 4f;
     private float iframes = 0.8f;
+    private float maxHealth = 100;
 
      [Header("Damage Settings")] // added by Thomas 
     public float meleeDamage = 34f; // editable in Inspector 
     public float hitDamageMultiplier = 1f; // optional balancing multiplier 
    
     public TextMeshProUGUI healthTex;
+    public Image healthBar;
     void Start()
     {
         Debug.Log("[PlayerHealth] Start — Initial Health: " + playerHealth); // added by Thomas for testing
-        setText();
+        setHealthUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (regenTime <= 0f && playerHealth > 0 && playerHealth < 100 * PerkChecker.HealthPerkMult) {
+        if (regenTime <= 0f && playerHealth > 0 && playerHealth < maxHealth * PerkChecker.HealthPerkMult) {
            heal();
         }
-        else if (playerHealth > 100 * PerkChecker.HealthPerkMult) {
+        else if (playerHealth > maxHealth * PerkChecker.HealthPerkMult) {
             playerHealth -= 1;
         }
         tick();
@@ -33,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
     }
     private void heal() {
             playerHealth += 0.125f * PerkChecker.HealthPerkMult;
-            setText();
+            setHealthUI();
     }
 
     // NEW: external zombie damage
@@ -50,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
             iframes = 0.8f;
 
             Debug.Log("[PlayerHealth] Took " + finalDamage + " damage — Health now: " + playerHealth); 
-            setText();
+            setHealthUI();
         }
         else
         {
@@ -67,7 +71,7 @@ public class PlayerHealth : MonoBehaviour
             playerHealth -= meleeDamage; // editable in Inspector
             regenTime = 4f;
             iframes = 0.8f;
-            setText();
+            setHealthUI();
         }  
     }
 
@@ -81,7 +85,7 @@ public class PlayerHealth : MonoBehaviour
             regenTime = 4f;
             iframes = 0.8f;
 
-            setText();
+            setHealthUI();
         }
     }
 
@@ -113,8 +117,9 @@ public class PlayerHealth : MonoBehaviour
             parent.SetActive(false);
         }
     }
-    void setText() {
+    void setHealthUI() {
         healthTex.text = Mathf.Floor(playerHealth).ToString();
+        healthBar.fillAmount = playerHealth / maxHealth;
     }
     
 }

@@ -7,6 +7,11 @@ public class ZombieHealth : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
+    [HideInInspector] public waveSpawner waveSpawner;
+    [HideInInspector] public Wave myWave;
+
+    private bool isDead = false;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -31,7 +36,10 @@ public class ZombieHealth : MonoBehaviour
 
     private void Die()
     {
-//        Debug.Log($"[ZombieHealth] {gameObject.name} died!");
+        //Debug.Log($"[ZombieHealth] {gameObject.name} died!");
+
+        if (isDead) return;
+        isDead = true;
 
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         if (agent != null)
@@ -44,6 +52,11 @@ public class ZombieHealth : MonoBehaviour
         if (zs != null)
         {
             zs.StopMoan();
+        }
+
+        if (myWave != null)
+        {
+            myWave.enemiesLeft--;
         }
 
         // play death SFX if we add one

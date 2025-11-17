@@ -8,11 +8,15 @@ public class waveSpawner : MonoBehaviour
 
     public Wave[] waves;
 
-    private int currentWaveIndex = 0;
+    public int currentWaveIndex = 0;
     private bool spawning = false;
+
+    private bool readyToCountDown;
 
     private void Start()
     {
+        readyToCountDown = true;
+
         for (int i = 0; i < waves.Length; i++)
         {
             waves[i].enemiesLeft = waves[i].enemies.Length;
@@ -21,14 +25,21 @@ public class waveSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (spawning) return;
-        if (currentWaveIndex >= waves.Length) return; // stop after last wave
+        if (readyToCountDown && !spawning) 
+        {
+            countdown -= Time.deltaTime;
+        }
 
-        countdown = countdown - Time.deltaTime;
+        if (spawning) return;
+
+        if (currentWaveIndex >= waves.Length)
+        {
+            return;
+        }
 
         if (countdown <= 0)
         {
-            countdown = waves[currentWaveIndex].timeToNextWave;
+            readyToCountDown = false;
             StartCoroutine(SpawnWave());
         }
     }
@@ -38,42 +49,59 @@ public class waveSpawner : MonoBehaviour
         spawning = true;
 
         Wave currentWave = waves[currentWaveIndex];
+        var spawnedEnemies = new System.Collections.Generic.List<Enemy>();
 
-        for (int i = 0; i < currentWave.enemies.Length; i++)
-        {
-            if (spawnPoints.Length == 0)
+        if (currentWaveIndex < waves.Length)
+        { 
+            for (int i = 0; i < currentWave.enemies.Length; i++)
             {
-                Debug.LogError("No spawn points assigned");
-                spawning = false;
-                yield break;
+                if (spawnPoints.Length == 0)
+                {
+                    Debug.LogError("No spawn points assigned");
+                    spawning = false;
+                    yield break;
+                }
+
+                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+                // refernce to spawn enemy
+                Enemy newEnemy = Instantiate(currentWave.enemies[i], spawnPoint.position, spawnPoint.rotation);
+
+                ZombieHealth zh = newEnemy.GetComponent<ZombieHealth>();
+                if (zh != null)
+                {
+                    zh.waveSpawner = this;
+                    zh.myWave = currentWave;
+                }    
+
+                // play zombie sound
+                ZombieSound zs = newEnemy.GetComponent<ZombieSound>();
+                if (zs != null)
+                {
+                    zs.PlayMoanLoop();
+                }
+
+                yield return new WaitForSeconds(currentWave.timeToNextEnemy);
             }
 
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-            // spawn enemy
-            Enemy newEnemy = Instantiate(currentWave.enemies[i], spawnPoint.position, spawnPoint.rotation);
-
-            // play zombie sound
-            ZombieSound zs = newEnemy.GetComponent<ZombieSound>();
-            if (zs != null)
-
-                zs.PlayMoanLoop();
-
-            yield return new WaitForSeconds(currentWave.timeToNextEnemy);
         }
 
-        yield return new WaitForSeconds(currentWave.timeToNextWave);
+        while (currentWave.enemiesLeft > 0)
+            yield return null;
 
         currentWaveIndex++;
+
+        if (currentWaveIndex < waves.Length)
+        {
+            countdown = waves[currentWaveIndex].timeToNextWave;
+            readyToCountDown = true;
+        }
 
         if (currentWaveIndex >= waves.Length)
         {
             Debug.Log("All waves complete");
-            spawning = false;
-            yield break;
         }
 
-        countdown = waves[currentWaveIndex].timeToNextWave;
         spawning = false;
     }
 }

@@ -25,7 +25,7 @@ public class waveSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (readyToCountDown && !spawning) 
+        if (readyToCountDown && !spawning)
         {
             countdown -= Time.deltaTime;
         }
@@ -49,41 +49,36 @@ public class waveSpawner : MonoBehaviour
         spawning = true;
 
         Wave currentWave = waves[currentWaveIndex];
-        var spawnedEnemies = new System.Collections.Generic.List<Enemy>();
 
-        if (currentWaveIndex < waves.Length)
-        { 
-            for (int i = 0; i < currentWave.enemies.Length; i++)
+        for (int i = 0; i < currentWave.enemies.Length; i++)
+        {
+            if (spawnPoints.Length == 0)
             {
-                if (spawnPoints.Length == 0)
-                {
-                    Debug.LogError("No spawn points assigned");
-                    spawning = false;
-                    yield break;
-                }
-
-                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-                // refernce to spawn enemy
-                Enemy newEnemy = Instantiate(currentWave.enemies[i], spawnPoint.position, spawnPoint.rotation);
-
-                ZombieHealth zh = newEnemy.GetComponent<ZombieHealth>();
-                if (zh != null)
-                {
-                    zh.waveSpawner = this;
-                    zh.myWave = currentWave;
-                }    
-
-                // play zombie sound
-                ZombieSound zs = newEnemy.GetComponent<ZombieSound>();
-                if (zs != null)
-                {
-                    zs.PlayMoanLoop();
-                }
-
-                yield return new WaitForSeconds(currentWave.timeToNextEnemy);
+                Debug.LogError("No spawn points assigned");
+                spawning = false;
+                yield break;
             }
 
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+            // refernce to spawn enemy
+            Enemy newEnemy = Instantiate(currentWave.enemies[i], spawnPoint.position, spawnPoint.rotation);
+
+            ZombieHealth zh = newEnemy.GetComponent<ZombieHealth>();
+            if (zh != null)
+            {
+                zh.waveSpawner = this;
+                zh.myWave = currentWave;
+            }
+
+            // play zombie sound
+            ZombieSound zs = newEnemy.GetComponent<ZombieSound>();
+            if (zs != null)
+            {
+                zs.PlayMoanLoop();
+            }
+
+            yield return new WaitForSeconds(currentWave.timeToNextEnemy);
         }
 
         while (currentWave.enemiesLeft > 0)

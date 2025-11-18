@@ -10,6 +10,7 @@ public class DrinkBehavior : MonoBehaviour
     public TextMeshProUGUI promptTex;
     private float drinkDuration = 3f;
     private bool isDrinking = false;
+    public PerkChecker perkUIHandler;
 
     void Update()
     {
@@ -44,5 +45,6 @@ public class DrinkBehavior : MonoBehaviour
         recievedPerk = 0; 
         
         isDrinking = false;
+
     }
 }

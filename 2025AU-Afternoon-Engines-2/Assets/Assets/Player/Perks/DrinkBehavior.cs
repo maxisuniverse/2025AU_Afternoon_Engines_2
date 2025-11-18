@@ -5,13 +5,22 @@ using TMPro;
 public class DrinkBehavior : MonoBehaviour
 {
     public static int recievedPerk = 0;
+
     public GameObject pMachine;
     public GameObject gun;
+    public GameObject healthSoda;
+    public GameObject speedSoda;
+    public GameObject reloadSoda;
+
     public TextMeshProUGUI promptTex;
     private float drinkDuration = 3f;
     private bool isDrinking = false;
-    public PerkChecker perkUIHandler;
 
+    void Start() {
+        healthSoda.SetActive(false);
+        speedSoda.SetActive(false);
+        reloadSoda.SetActive(false);
+    }
     void Update()
     {
         if (recievedPerk != 0 && !isDrinking) 
@@ -26,16 +35,20 @@ public class DrinkBehavior : MonoBehaviour
         gun.SetActive(false);
         pMachine.SetActive(false);
         promptTex.enabled = false;
-        yield return new WaitForSeconds(drinkDuration); 
-        
         
         if (recievedPerk == 1) {
+            healthSoda.SetActive(true);
+            yield return new WaitForSeconds(drinkDuration); 
             PerkChecker.hasDoubleHealth = true;
         }
         if (recievedPerk == 2) {
+            speedSoda.SetActive(true);
+            yield return new WaitForSeconds(drinkDuration); 
             PerkChecker.hasFasterMovement = true;
         }
         if (recievedPerk == 3) {
+            reloadSoda.SetActive(true);
+            yield return new WaitForSeconds(drinkDuration); 
             PerkChecker.hasSpeedReload = true;
         }
         gun.SetActive(true);
@@ -44,6 +57,10 @@ public class DrinkBehavior : MonoBehaviour
         GunScriptBase.isReloading = false;
         recievedPerk = 0; 
         
+        healthSoda.SetActive(false);
+        speedSoda.SetActive(false);
+        reloadSoda.SetActive(false);
+
         isDrinking = false;
 
     }

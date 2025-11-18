@@ -12,6 +12,7 @@ public class PerkChecker : MonoBehaviour
     public Image healthPerkIcon;
     public Image speedPerkIcon;
     public Image reloadPerkIcon;
+
     void Update()
     {
         if (hasFasterMovement == true) {

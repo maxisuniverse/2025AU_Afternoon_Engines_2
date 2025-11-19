@@ -104,6 +104,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  waveSpawner: {fileID: 0}
+  myWave:
+    enemies: []
+    timeToNextEnemy: 0
+    timeToNextWave: 0
+    enemiesLeft: 0
 --- !u!114 &4211754138836561908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  detectionRange: 100
+  detectionRange: 200
   chaseSpeed: 2
   idleSpeed: 0
   bounceForce: 2
@@ -273,10 +279,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558313318b8a79f45a5d634027bcf930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 10
+  attackRange: 1
   attackStopDistance: 1.2
-  attackCooldown: 3
-  player: {fileID: 0}
+  attackCooldown: 1
+  attackDamage: 10
+  logInterval: 60
 --- !u!1001 &4057576248177928579
 PrefabInstance:
   m_ObjectHideFlags: 0

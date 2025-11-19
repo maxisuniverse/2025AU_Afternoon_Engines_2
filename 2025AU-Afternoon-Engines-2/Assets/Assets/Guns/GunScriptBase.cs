@@ -20,6 +20,7 @@ public class GunScriptBase : MonoBehaviour
     public TextMeshProUGUI ammoTex;
 
     public ParticleSystem muzzleFlash;
+    public Transform Gun;
 
     void Start()
     {
@@ -61,6 +62,7 @@ public class GunScriptBase : MonoBehaviour
     IEnumerator Reload() //reloads the gun. all of this is literally just so I can make the reload take time.
     {
         isReloading = true;
+        Gun.Rotate(-45f, 0f, 0f);
         reload.Play();
         if (PerkChecker.hasSpeedReload) {
             reload.pitch = 2f;
@@ -76,6 +78,7 @@ public class GunScriptBase : MonoBehaviour
         magazine += ammoToTransfer; 
         reserve -= ammoToTransfer;  
         isReloading = false;
+        Gun.Rotate(45f, 0f, 0f, Space.Self);
         SetText();
     }
     void SetText() {

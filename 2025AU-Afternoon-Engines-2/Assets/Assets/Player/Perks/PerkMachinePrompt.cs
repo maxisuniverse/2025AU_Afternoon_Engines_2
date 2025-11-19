@@ -21,7 +21,7 @@ public class PerkMachinePrompt : MonoBehaviour
         bool isVisibleAndFacing = IsObjectVisibleAndFacing(cam, this.gameObject);
         if (dist <= inteRange && isVisibleAndFacing) {
             promptTex.gameObject.SetActive(true); 
-            if (Input.GetKeyDown(KeyCode.E) && ScoreManager.currentScore >= -2000000000) {
+            if (Input.GetKeyDown(KeyCode.E) && ScoreManager.currentScore >= 3000) {
                     bool hasHealthPerk = PerkChecker.hasDoubleHealth;
                     bool hasSpeedPerk = PerkChecker.hasFasterMovement;
                     bool hasReloadPerk = PerkChecker.hasSpeedReload;

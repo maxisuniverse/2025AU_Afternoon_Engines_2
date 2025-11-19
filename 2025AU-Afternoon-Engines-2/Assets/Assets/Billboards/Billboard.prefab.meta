@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:2025AU-Afternoon-Engines-2/Assets/Assets/Billboards/Billboard.prefab.meta
 guid: 3405248a223269842afc371d2d1c3000
+========
+guid: 49fdda8d877f08447897ecdcb6ca5876
+>>>>>>>> 524df2ccef2a3735f12b57340a8a44d1e65dda30:2025AU-Afternoon-Engines-2/Assets/Assets/Sodas/Soda_03.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

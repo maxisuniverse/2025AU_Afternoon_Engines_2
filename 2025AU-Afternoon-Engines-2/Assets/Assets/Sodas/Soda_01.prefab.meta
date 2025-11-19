@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 75ad160ccf9a85142ae4f580f7273407
+<<<<<<<< HEAD:2025AU-Afternoon-Engines-2/Assets/Assets/City/Buildings and Bunk/Plane (2).prefab.meta
+guid: 6fe56d4777dec064a9267883fe5b7ac0
+========
+guid: 77c8f7030e37a584ab08a1ba07e2d3b7
+>>>>>>>> 524df2ccef2a3735f12b57340a8a44d1e65dda30:2025AU-Afternoon-Engines-2/Assets/Assets/Sodas/Soda_01.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

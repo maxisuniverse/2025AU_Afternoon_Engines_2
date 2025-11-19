@@ -13,6 +13,11 @@ public class DrinkBehavior : MonoBehaviour
     public GameObject reloadSoda;
 
     public TextMeshProUGUI promptTex;
+
+    public AudioSource openCan;
+    public AudioSource drink;
+    public AudioSource dropCan;
+
     private float drinkDuration = 3f;
     private bool isDrinking = false;
 
@@ -35,22 +40,28 @@ public class DrinkBehavior : MonoBehaviour
         gun.SetActive(false);
         pMachine.SetActive(false);
         promptTex.enabled = false;
+        openCan.Play();
+        yield return new WaitForSeconds(0.2f);
         
         if (recievedPerk == 1) {
             healthSoda.SetActive(true);
+            drink.Play();
             yield return new WaitForSeconds(drinkDuration); 
             PerkChecker.hasDoubleHealth = true;
         }
         if (recievedPerk == 2) {
             speedSoda.SetActive(true);
+            drink.Play();
             yield return new WaitForSeconds(drinkDuration); 
             PerkChecker.hasFasterMovement = true;
         }
         if (recievedPerk == 3) {
             reloadSoda.SetActive(true);
+            drink.Play();
             yield return new WaitForSeconds(drinkDuration); 
             PerkChecker.hasSpeedReload = true;
         }
+        dropCan.Play();
         gun.SetActive(true);
         pMachine.SetActive(true);
         promptTex.enabled = true;
